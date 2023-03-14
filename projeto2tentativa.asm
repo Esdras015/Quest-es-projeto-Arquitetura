@@ -1,8 +1,8 @@
 #PROJETO INICIAR
 
 .data
-predio: .space 11601 	#5 espaÁos de 41 char para cada morador totalizando 205 para cada andar
-			#segudio de 1 espaÁo para o tipo de veiculo "c" ou "m" e mais 21 para cor e 21 para modelo 2 vezes
+predio: .space 11601 	#5 espa√ßos de 41 char para cada morador totalizando 205 para cada andar
+			#segudio de 1 espa√ßo para o tipo de veiculo "c" ou "m" e mais 21 para cor e 21 para modelo 2 vezes
 			#pois podem existir ate dois veiculos totalizando 85. TOTAL DE CADA APARTAMENTO 290
 predio_info_geral: .space 40 #armazena quantas pessoas tem em cada apartamento para saber principalmente se o mesmo esta vazio
 ap_invalido: .asciiz "Falha: AP invalido"
@@ -10,8 +10,8 @@ ap_cheio: .asciiz "Falha: AP com numero max de moradores"
 morador_nao_encontrado_str: .asciiz "Falha: morador nao encontrado"
 string_vazia: .asciiz ""
 
-#obs. tudo entre as duas arÈas de testes fazem parte da ·rea de teste
-############################################### ¡REA DE TESTES
+#obs. tudo entre as duas ar√©as de testes fazem parte da √°rea de teste
+############################################### √ÅREA DE TESTES
 
 teste: .asciiz "01-Pedro"
 teste2: .asciiz "01-lucas"
@@ -57,31 +57,31 @@ jal validar_apartamento
 beq $v1, -1, end
 jal ad_morador
 
-################################ ¡REA DE TESTES
+################################ √ÅREA DE TESTES
 
 
 j end
 
 
 
-validar_apartamento: #salva em a1 o numero do apartamento e em $a2 o endereÁo daquele apartamento
+validar_apartamento: #salva em a1 o numero do apartamento e em $a2 o endere√ßo daquele apartamento
 	li $v1, 0
 	lb $t0 ($a0) #carregando o primeiro bit da string
 	lb $t1 1($a0) #e o seungdo
 	sub $t0, $t0, 48 #converterndo de caracter para numeral
 	sub $t1, $t1, 48 #converterndo de caracter para numeral
-	blt $t0, 0, validar_ap_invalido #$t0 varia entre 0 e 4 logo n„o pode estar acima ou abaixo
+	blt $t0, 0, validar_ap_invalido #$t0 varia entre 0 e 4 logo n√£o pode estar acima ou abaixo
 	bgt $t0, 4, validar_ap_invalido
-	blt $t1, 0, validar_ap_invalido #$t1 varia entre 0 e 9 logo n„o pode estar acima ou abaixo
+	blt $t1, 0, validar_ap_invalido #$t1 varia entre 0 e 9 logo n√£o pode estar acima ou abaixo
 	bgt $t1, 9, validar_ap_invalido
 	mul $t0, $t0, 10 #multiplicando por 10 pois para transformar o numero em dezena
 	add $t0, $t0, $t1 #somando a dezena com a unidade para chegar ao numero do apartamento
 	move $a1, $t0 #salvando o numero do apartamento em $a1 para ser usado mais tarde
-	subi $t0, $t0, 1 #subtraindo 1 pois quero o primeiro endereÁo de cada apartamento e n„o o ultimo
+	subi $t0, $t0, 1 #subtraindo 1 pois quero o primeiro endere√ßo de cada apartamento e n√£o o ultimo
 	mul $t0, $t0, 290 #multiplicando por 290 para chegar no numero do apartemento na memoria
 	addi $t0, $t0, 1 #somando 1 para acessar o primeiro valor do apartaento desejado no lugar do ultimo valor do apartamento anterior
-	la $t2, predio #carregando o endereÁo base da string onde s„o armazenadas todas ar informaÁıes
-	add $a2, $t0, $t2 #somando o valor do endereÁo base com o valor de $t0 para chegar no local especifico onde aquele morador sera armazenado
+	la $t2, predio #carregando o endere√ßo base da string onde s√£o armazenadas todas ar informa√ß√µes
+	add $a2, $t0, $t2 #somando o valor do endere√ßo base com o valor de $t0 para chegar no local especifico onde aquele morador sera armazenado
 	jr $ra
 	
 	
@@ -97,35 +97,35 @@ validar_apartamento: #salva em a1 o numero do apartamento e em $a2 o endereÁo da
 	
 
 ad_morador:
-	la $t8, predio_info_geral #pegando o endereÁo base da onde esta armazenado a quantidade de pessoas em cada apartamento
+	la $t8, predio_info_geral #pegando o endere√ßo base da onde esta armazenado a quantidade de pessoas em cada apartamento
 	add $t7, $a1, $t8 #somando com o numero do apartamento que foi salvo la atras
 	lb $t8, ($t7) #carregando o byte que esta armazenado
 	beq $t8, 5, validar_ap_cheio #verifica se o apartamento esta cheio
 
-	add $a0, $a0, 3 #pulando para o terceiro endereÁo da string onde contem o nome do morador
+	add $a0, $a0, 3 #pulando para o terceiro endere√ßo da string onde contem o nome do morador
 	lb $t1, ($a2)
 	beqz $t1, ad_morador_ap_vazio #verifica se o apartamento esta vazio
 	j ad_morador_ap_nao_vazio 
 	
 	
 	ad_morador_ap_vazio: #salva o nome do morador quando o apartamento esta vazio
-		move $t0, $a2 #tirando os endereÁos das registradores de parametro e colocando em registradores temporarios
+		move $t0, $a2 #tirando os endere√ßos das registradores de parametro e colocando em registradores temporarios
 		move $t1, $a0
 		loop:
 			lb $t2, ($t1) #carrega 1 bit da memoria em $t2 da string origem
 			beqz $t2, exit #compara $t2 com zero para saber se ja chegou ao fim da string
 			sb $t2, ($t0) #guarda na memoria destino o bit em $t2
-			addi $t0, $t0, 1 #incrementa o endereÁo de memoria
+			addi $t0, $t0, 1 #incrementa o endere√ßo de memoria
 			addi $t1, $t1, 1
 			j loop
 		exit:
 			sb $zero, 1($t0) #adiciona o zero ao final da string
-			la $t8, predio_info_geral #pegando o endereÁo base da onde esta armazenado a quantidade de pessoas em cada apartamento
+			la $t8, predio_info_geral #pegando o endere√ßo base da onde esta armazenado a quantidade de pessoas em cada apartamento
 			add $a1, $a1, $t8 #somando com o numero do apartamento que foi salvo la atras
 			lb $t8, ($a1) #carregando o byte que esta armazenado
 			addi $t8, $t8, 1 #somando 1 pois foi adicionado 1 morador
 			sb $t8, ($a1) #salvando o byte
-			jr $ra #finalizando a funÁ„o
+			jr $ra #finalizando a fun√ß√£o
 			
 	ad_morador_ap_nao_vazio:
 		addi $a2, $a2, 41
@@ -138,40 +138,40 @@ ad_morador:
 rm_morador:
 	addi $a0, $a0, 3 #somando 3 para chegar onde esta o nome do morador "12-nome"
 	move $t9, $a0 #usarei t9 para iterar sobre a string onde esta o nome da pessoa que sera removida
-	move $t8, $a2 #usarei $t8 para iterar sobre a string na memoria e fazer a comparaÁao com $t9
-	move $t7, $a2 #usarei $t7 para saber o inicio da string que esta na memoria para facilitar a remoÁ„o
+	move $t8, $a2 #usarei $t8 para iterar sobre a string na memoria e fazer a compara√ßao com $t9
+	move $t7, $a2 #usarei $t7 para saber o inicio da string que esta na memoria para facilitar a remo√ß√£o
 	li $t6, 0 #$t6 sera o contador para saber quando ja foi feito a busca em todas as pessoas na memoria
 	la $t0, predio_info_geral 
-	add $t0, $t0, $a1 #somando o numero do apartamento com o endereÁo base do "predio_info_geral"
+	add $t0, $t0, $a1 #somando o numero do apartamento com o endere√ßo base do "predio_info_geral"
 	lb $t0, ($t0) #carregado em $t0 o numero de pessoas naquele apartamento
-	beqz $t0, morador_nao_encontrado #verifica se n„o tem ninguem no apartamento especificado
+	beqz $t0, morador_nao_encontrado #verifica se n√£o tem ninguem no apartamento especificado
 	rm_morador_loop:
 		lb $t1, ($t8) #carregando os bits armazendos
 		lb $t2, ($t9)
 		beqz $t2, rm_morador_encontrado #verifica se o source chegou ao final
-		bne $t1, $t2 rm_morador_proximo #vefica se o as strings s„o diferentes
-		addi $t8, $t8, 1 #soma 1 ao endereÁo para chegar ao proximo byte
+		bne $t1, $t2 rm_morador_proximo #vefica se o as strings s√£o diferentes
+		addi $t8, $t8, 1 #soma 1 ao endere√ßo para chegar ao proximo byte
 		addi $t9, $t9, 1
 		j rm_morador_loop #reinicia o loop
 	
 	rm_morador_encontrado:
-		beq $t1, $t2, rm_morador_encontrado_de_fato #verifica se o ultima caracter de cada string È igual ou seja se ambos s„o iguais a zero
+		beq $t1, $t2, rm_morador_encontrado_de_fato #verifica se o ultima caracter de cada string √© igual ou seja se ambos s√£o iguais a zero
 		j rm_morador_proximo #pula para verificar o proximo morador
 		
 			rm_morador_encontrado_de_fato:
 				lb $t1, ($t7) #carrega o primeiro bit da string que sera removida
 				beqz $t1, rm_morador_finalizacao #verifica se a string chegou ao final
-				sb $zero, ($t7) #armazena zero ou seja apaga a informaÁ„o que estava armazenada
-				addi $t7, $t7, 1 #soma 1 ao endereÁo para chegar ao proximo byte
+				sb $zero, ($t7) #armazena zero ou seja apaga a informa√ß√£o que estava armazenada
+				addi $t7, $t7, 1 #soma 1 ao endere√ßo para chegar ao proximo byte
 				j rm_morador_encontrado_de_fato #reinicia o loop
 				
 				rm_morador_finalizacao:
-					la $t0, predio_info_geral #carrega o endereÁo base onde est„o armazenados a quantidade de pessoas de cada apartamento
+					la $t0, predio_info_geral #carrega o endere√ßo base onde est√£o armazenados a quantidade de pessoas de cada apartamento
 					add $t0, $t0, $a1 #soma com o numero do apartamento
 					lb $t1 ($t0) #carrega o byte que estava armazenado
 					subi $t1, $t1, 1 #subtrai 1 pois uma pessoa foi removida
 					sb $t1, ($t0) #guarda o byte
-					jr $ra #finaliza a funÁ„o
+					jr $ra #finaliza a fun√ß√£o
 	
 	rm_morador_proximo:
 		addi $t6, $t6, 1
